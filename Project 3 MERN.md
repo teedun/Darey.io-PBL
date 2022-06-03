@@ -12,16 +12,55 @@ this Mern stack comprises of the following
 Having spin up and running a virtual server (EC2) the next step is to configure our backend 
 
 ## STEP 1 – BACKEND CONFIGURATION
-The Ubuntu server was apt updated and Upgrades, after which the location of the node servers were located on UBuntu respositories and was installed using the below codes 
-sudo apt-get install -y nodejs
-next is  Application Code Setup
-Create a new directory for your To-Do project: using the commands mkdir Todo after which you change into the directory and 
-Next, you will use the command npm init to initialise your project, so that a new file named package.json will be created. This file will normally contain information about your application and the dependencies that it needs to run. Follow the prompts after running the command. You can press Enter several times to accept default values, then accept to write out the package.json file by typing yes. 
 
-Having done all of that Next, we will Install ExpressJs and create the Routes directory.
-**INSTALL EXPRESSJS**
-Remember that Express is a framework for Node.js, therefore a lot of things developers would have programmed is already taken care of out of the box. Therefore it simplifies development, and abstracts a lot of low level details. For example, Express helps to define routes of your application based on HTTP methods and URLs.
-To use express, install it using npm:
-npm install express
-Now create a file index.js with this command touch index.js
+Update ubuntu **sudo apt update**
 
+Upgrade ubuntu **sudo apt upgrade**
+
+Get the location of Node.js software from Ubuntu repositories. **curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -**
+
+Install Node.js with the command below **sudo apt-get install -y nodejs**
+
+Verify the node installation with the command _**node -v**_  and Verify the node installation with the command _**npm -v**_
+
+## Next is the Application Code Set Up
+
+Create a new directory for your To-Do project by running mkdir Todo and verify it was created _ls_
+
+Initialize your project using _npm init_ and run _ls_ to verify you have package.json file created.
+
+<img width="690" alt="npm-init" src="https://user-images.githubusercontent.com/101952842/171905149-c0989313-8f9c-4970-835b-0e931af26e6b.png">
+
+## INSTALL EXPRESSJS
+
+To use express, install it using npm: npm install express
+
+Create a file index.js: touch index.js: and run ls: to confirm it was created.
+
+Install the dotenv module: npm install dotenv
+
+Open the index.js file: vim index.js
+
+Type the code below into it and save:
+
+
+const express = require('express');
+require('dotenv').config();
+
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+app.use((req, res, next) => {
+res.header("Access-Control-Allow-Origin", "\*");
+res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+next();
+});
+
+app.use((req, res, next) => {
+res.send('Welcome to Express');
+});
+
+app.listen(port, () => {
+console.log(`Server running on port ${port}`)
+});
